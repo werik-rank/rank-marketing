@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>body{margin:0;background:#E9ECF4;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#12172F;-webkit-font-smoothing:antialiased}a{color:#2176FF}a:hover{color:#05142D}*{box-sizing:border-box}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20,400,0,0&display=block">
+<meta name="ext-resource-dependency" content="assets/img119.png">
+<script src="proposta-model.js"></script>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#05142D"></rect><text x="50" y="62" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="34" font-weight="800" fill="#06B6D4">rank</text></svg></template>
+</helmet>
+<div style="height:100vh;display:grid;grid-template-rows:auto minmax(0,1fr)">
+<header style="position:relative;z-index:5;background:#FFFFFF;color:#12172F;border-bottom:1px solid #E1E3EE;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:8px 20px;min-width:0">
+<div style="display:flex;align-items:center;gap:10px;white-space:nowrap;min-width:0">
+<span style="font-size:20px;font-weight:800;letter-spacing:-0.03em;color:#05142D">rank</span>
+<span style="width:1px;height:28px;background:#E1E3EE"></span>
+<div style="display:flex;align-items:center;gap:2px">
+<span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A9B2CC;padding:0 2px 0 6px">Produto</span>
+<div style="position:relative">
+<button onClick="{{ onProdLista }}" title="Escolher produtos e módulos" aria-label="Produtos" style="height:26px;padding:0 4px 0 8px;display:flex;align-items:center;gap:4px;border-radius:6px;border:none;background:{{ prodBg }};color:#12172F;font:inherit;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#F1F3F8"><span>{{ prodLabel }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#A9B2CC">keyboard_arrow_down</span></button>
+<sc-if value="{{ prodOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ onProdFechar }}" style="position:fixed;inset:0;z-index:20"></div>
+<div style="position:absolute;left:0;top:34px;z-index:21;width:360px;max-height:520px;overflow-y:auto;background:#FFFFFF;border:1px solid #E1E3EE;border-radius:12px;box-shadow:0 16px 40px rgba(18,23,47,0.14);padding:6px;display:flex;flex-direction:column;gap:2px;white-space:normal">
+<span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A9B2CC;padding:8px 10px 6px">Produtos desta apresentação</span>
+<sc-for list="{{ prodLista }}" as="pr" hint-placeholder-count="4"><div style="display:flex;flex-direction:column;border-radius:8px;background:{{ pr.bg }}">
+<label style="display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:8px;cursor:pointer" style-hover="background:#F1F3F8"><input type="checkbox" checked="{{ pr.checked }}" onChange="{{ pr.onToggle }}" style="width:18px;height:18px;margin:1px 0 0;accent-color:#2176FF;flex:none;cursor:pointer"><span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;color:#12172F">{{ pr.nome }}</span><span style="font-size:12px;color:#6B7290">{{ pr.desc }}</span></span><span style="font-size:11px;font-weight:600;color:#6B7290;padding-top:2px">{{ pr.modsLabel }}</span></label>
+<sc-if value="{{ pr.isMain }}" hint-placeholder-val="{{ false }}"><span style="margin:-6px 0 6px 38px;align-self:flex-start;padding:2px 8px;border-radius:10px;background:#05142D;color:#F8FAFC;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';font-size:13px;line-height:1;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">star</span>Produto principal · abre o pitch</span></sc-if>
+<sc-if value="{{ pr.podeMain }}" hint-placeholder-val="{{ false }}"><button onClick="{{ pr.onMain }}" style="margin:-6px 0 6px 34px;align-self:flex-start;padding:2px 6px;border-radius:6px;border:none;background:transparent;color:#2176FF;font:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px" style-hover="background:#EEF3FF"><span style="font-family:'Material Symbols Rounded';font-size:14px;line-height:1;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">star</span>Definir como principal</button></sc-if>
+<sc-if value="{{ pr.temMods }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:0;padding:0 6px 8px 34px">
+<sc-for list="{{ pr.mods }}" as="md" hint-placeholder-count="3"><label style="display:flex;align-items:center;gap:8px;padding:6px 6px;border-radius:6px;cursor:pointer;font-size:13px;color:#3B4262" style-hover="background:#F1F3F8"><input type="checkbox" checked="{{ md.checked }}" onChange="{{ md.onToggle }}" style="width:16px;height:16px;margin:0;accent-color:#2176FF;flex:none;cursor:pointer"><span style="flex:1">{{ md.nome }}</span><sc-if value="{{ md.temTag }}" hint-placeholder-val="{{ false }}"><span style="padding:2px 8px;border-radius:10px;background:#EEF3FF;color:#2176FF;font-size:11px;font-weight:600;white-space:nowrap">{{ md.tag }}</span></sc-if></label></sc-for>
+</div></sc-if>
+</div></sc-for>
+<span style="font-size:12px;line-height:1.45;color:#6B7290;padding:8px 10px 6px">Cada produto marcado ganha slides e uma frente na proposta comercial. O principal vem primeiro, logo depois de Marcas clientes.</span>
+</div>
+</sc-if>
+</div>
+</div>
+<span style="color:#C3C8D8;font-size:14px">/</span>
+<div style="display:flex;align-items:center;gap:2px;min-width:0">
+<span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A9B2CC;padding:0 2px 0 6px">Apresentação</span>
+<sc-if value="{{ editNome }}" hint-placeholder-val="{{ false }}"><input ref="{{ nomeRef }}" value="{{ nomeAtual }}" onChange="{{ onNome }}" onBlur="{{ onNomeFim }}" onKeyDown="{{ onNomeKey }}" placeholder="Nome da apresentação" aria-label="Nome da apresentação" style="height:26px;width:240px;max-width:100%;padding:0 8px;border-radius:6px;border:1px solid #2176FF;background:#FFFFFF;color:#12172F;font:inherit;font-size:14px;font-weight:600;outline:none"></sc-if>
+<sc-if value="{{ naoEditNome }}" hint-placeholder-val="{{ true }}"><button onClick="{{ onNomeEdit }}" title="Clique para renomear" style="height:26px;max-width:280px;padding:0 8px;display:flex;align-items:center;gap:6px;border-radius:6px;border:none;background:transparent;color:#12172F;font:inherit;font-size:14px;font-weight:600;cursor:text" style-hover="background:#F1F3F8"><span style="overflow:hidden;text-overflow:ellipsis">{{ nomeLabel }}</span><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#A9B2CC">edit</span></button></sc-if>
+</div>
+</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:2px;min-width:0">
+<div style="position:relative">
+<button onClick="{{ onLista }}" title="Minhas apresentações" aria-label="Minhas apresentações" style="height:34px;padding:0 10px 0 8px;display:flex;align-items:center;gap:6px;border-radius:8px;cursor:pointer;border:none;background:{{ listaBg }};color:#3B4262;font:inherit;font-size:13px;font-weight:600" style-hover="background:#F1F3F8;color:#12172F"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">folder_open</span><span>Minhas apresentações</span><span style="min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:#EEF0F6;color:#6B7290;font-size:11px;display:flex;align-items:center;justify-content:center">{{ nPropostas }}</span></button>
+<sc-if value="{{ listaOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ onListaFechar }}" style="position:fixed;inset:0;z-index:20"></div>
+<div style="position:absolute;right:0;top:40px;z-index:21;width:340px;max-height:420px;overflow-y:auto;background:#FFFFFF;border:1px solid #E1E3EE;border-radius:12px;box-shadow:0 16px 40px rgba(18,23,47,0.14);padding:6px;display:flex;flex-direction:column;gap:2px">
+<span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A9B2CC;padding:8px 10px 6px">Apresentações salvas neste navegador</span>
+<sc-for list="{{ lista }}" as="li" hint-placeholder-count="3"><button onClick="{{ li.onClick }}" style="width:100%;padding:10px;display:flex;align-items:center;gap:10px;border-radius:8px;border:none;background:{{ li.bg }};color:#12172F;font:inherit;text-align:left;cursor:pointer" style-hover="background:#F1F3F8"><span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ li.nome }}</span><span style="font-size:12px;color:#6B7290">{{ li.sub }}</span></span><span style="font-size:11px;font-weight:600;color:{{ li.stColor }};white-space:nowrap">{{ li.status }}</span></button></sc-for>
+</div>
+</sc-if>
+</div>
+<span style="width:1px;height:18px;background:#E1E3EE;margin:0 6px"></span>
+<button onClick="{{ onNova }}" title="Nova apresentação" aria-label="Nova apresentação" style="width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;border:none;background:transparent;color:#6B7290" style-hover="background:#F1F3F8;color:#12172F"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">add</span></button>
+<button onClick="{{ onDuplicar }}" title="Duplicar apresentação" aria-label="Duplicar apresentação" style="width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;border:none;background:transparent;color:#6B7290" style-hover="background:#F1F3F8;color:#12172F"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">content_copy</span></button>
+<button onClick="{{ onExcluir }}" title="Excluir apresentação" aria-label="Excluir apresentação" style="width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;border:none;background:transparent;color:#6B7290" style-hover="background:#FDECEC;color:#C2363D"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">delete</span></button>
+<span style="width:1px;height:18px;background:#E1E3EE;margin:0 6px"></span>
+<button onClick="{{ onPdf }}" title="Salvar PDF" aria-label="Salvar PDF" style="width:34px;height:34px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;border:none;background:transparent;color:#6B7290" style-hover="background:#F1F3F8;color:#12172F"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">download</span></button>
+<button onClick="{{ onApresentar }}" title="Apresentar" aria-label="Apresentar" style="width:34px;height:34px;padding:0;margin-left:4px;display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;border:none;background:#05142D;color:#F8FAFC" style-hover="background:#12264D"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">open_in_full</span></button>
+</div>
+</header>
+
+<div style="display:grid;grid-template-columns:minmax(340px,440px) minmax(0,1fr);min-height:0;min-width:0">
+<aside style="overflow-y:auto;padding:24px 28px;display:flex;flex-direction:column;gap:0;background:#FFFFFF;border-right:1px solid #E1E3EE">
+<div style="flex:none;display:flex;flex-direction:column;gap:8px;padding-bottom:12px">
+<sc-if value="{{ pendHas }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onPendLista }}" style="display:flex;align-items:center;gap:8px;padding:8px 10px;margin:0 -10px;border-radius:8px;border:none;background:transparent;color:#12172F;font:inherit;text-align:left;cursor:pointer" style-hover="background:#FFFBEB"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#D97706">error</span><span style="flex:1;font-size:14px;font-weight:700">{{ pendTotalLabel }}</span><span style="font-size:12px;color:#6B7290">{{ pendListaLabel }}</span><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#A9B2CC">{{ pendChev }}</span></button></sc-if>
+<sc-if value="{{ pendListaOpen }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:2px;padding:6px;border-radius:10px;background:#FFFBEB;max-height:320px;overflow-y:auto">
+<sc-for list="{{ pendAll }}" as="pa" hint-placeholder-count="4"><button onClick="{{ pa.onClick }}" style="display:flex;align-items:flex-start;gap:10px;padding:8px;border-radius:6px;border:none;background:transparent;color:#92400E;font:inherit;font-size:13px;line-height:1.4;text-align:left;cursor:pointer" style-hover="background:#FEF3C7"><span style="flex:none;width:18px;font-size:11px;font-weight:600;color:#B45309;font-variant-numeric:tabular-nums;padding-top:2px">{{ pa.num }}</span><span style="flex:1">{{ pa.t }}</span><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#D97706;flex:none;padding-top:2px">arrow_forward</span></button></sc-for>
+</div></sc-if>
+<sc-if value="{{ pendOk }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:8px"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#16A34A">check_circle</span><span style="font-size:14px;font-weight:700;color:#12172F">Tudo pronto para enviar</span></div></sc-if>
+</div>
+<div style="flex:none;margin:0 0 12px;padding-bottom:14px;border-bottom:1px solid #E1E3EE;display:flex;flex-direction:column;gap:10px">
+<button onClick="{{ onAjuda }}" style="display:flex;align-items:center;gap:6px;padding:0;border:none;background:transparent;color:#6B7290;font:inherit;cursor:pointer;text-align:left" style-hover="color:#12172F"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#A9B2CC">help</span><span style="flex:1;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">Como usar</span><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;color:#A9B2CC">{{ ajudaChev }}</span></button>
+<sc-if value="{{ ajudaOpen }}" hint-placeholder-val="{{ false }}">
+<ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.5;color:#3B4262;text-wrap:pretty">
+<li style="display:flex;gap:10px"><span style="flex:none;width:18px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums;padding-top:1px">1</span><span>Crie uma proposta em <strong style="color:#12172F">+</strong> no topo, ou duplique uma existente.</span></li>
+<li style="display:flex;gap:10px"><span style="flex:none;width:18px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums;padding-top:1px">2</span><span>Preencha as seis etapas abaixo. O texto em cinza dentro dos campos é só exemplo: a prévia mostra o exemplo até você preencher.</span></li>
+<li style="display:flex;gap:10px"><span style="flex:none;width:18px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums;padding-top:1px">3</span><span>O número em amarelo indica o que falta em cada etapa. O check verde indica que a etapa está completa.</span></li>
+<li style="display:flex;gap:10px"><span style="flex:none;width:18px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums;padding-top:1px">4</span><span>Sem pendências, baixe o PDF ou apresente pelos botões do topo.</span></li>
+</ol>
+<p style="margin:0;font-size:12px;line-height:1.5;color:#6B7290">Use <strong style="color:#12172F">{empresa}</strong> em qualquer texto para inserir o nome do prospect. Tudo fica salvo neste navegador.</p>
+</sc-if>
+</div>
+
+<div onFocus="{{ focus.capa }}" style="flex:none;border-bottom:1px solid #E1E3EE">
+<button onClick="{{ toggle.capa }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:18px 0;border:none;background:transparent;color:#12172F;font:inherit;text-align:left;cursor:pointer">
+<span style="width:20px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums">01</span>
+<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700">Prospect e capa</span><span style="font-size:12px;color:#6B7290">{{ slideLbl.capa }}</span></span>
+<sc-if value="{{ pend.capa.has }}" hint-placeholder-val="{{ false }}"><span title="Pendências nesta etapa" style="min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:#FEF3C7;color:#B45309;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ pend.capa.n }}</span></sc-if><sc-if value="{{ pend.capa.ok }}" hint-placeholder-val="{{ false }}"><span title="Etapa completa" style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:18px;color:#16A34A">check_circle</span></sc-if><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;color:#A9B2CC">{{ chev.capa }}</span>
+</button>
+<sc-if value="{{ isOpen.capa }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 22px 32px;display:flex;flex-direction:column;gap:14px">
+<sc-if value="{{ pend.capa.has }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;background:#FFFBEB"><sc-for list="{{ pend.capa.items }}" as="pi" hint-placeholder-count="1"><div onClick="{{ pi.onClick }}" title="Ir para o campo" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:#92400E;cursor:pointer;border-radius:6px;padding:2px 4px;margin:0 -4px" style-hover="background:#FEF3C7"><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:16px;color:#D97706;flex:none">error</span><span>{{ pi.t }}</span></div></sc-for></div></sc-if>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Nome do prospect</span><input data-pf="prospect" value="{{ f.prospect }}" onChange="{{ on.prospect }}" placeholder="{{ ex.prospect }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Mês / data</span><input data-pf="data" value="{{ f.data }}" onChange="{{ on.data }}" placeholder="{{ ex.data }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+</div>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Preparado para</span><input data-pf="preparadoPara" value="{{ f.preparadoPara }}" onChange="{{ on.preparadoPara }}" placeholder="{{ ex.preparadoPara }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Escopo</span><input data-pf="escopo" value="{{ f.escopo }}" onChange="{{ on.escopo }}" placeholder="{{ ex.escopo }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Subtítulo da capa</span><textarea rows="3" data-pf="subtitulo" value="{{ f.subtitulo }}" onChange="{{ on.subtitulo }}" placeholder="{{ ex.subtitulo }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;line-height:1.45;color:#12172F;background:#FFFFFF;outline:none;resize:vertical" style-focus="border-color:#2176FF"></textarea></label>
+</div>
+</sc-if>
+</div>
+
+<div onFocus="{{ focus.rep }}" style="flex:none;border-bottom:1px solid #E1E3EE">
+<button onClick="{{ toggle.rep }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:18px 0;border:none;background:transparent;color:#12172F;font:inherit;text-align:left;cursor:pointer">
+<span style="width:20px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums">02</span>
+<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700">Representante comercial</span><span style="font-size:12px;color:#6B7290">{{ slideLbl.rep }}</span></span>
+<sc-if value="{{ pend.rep.has }}" hint-placeholder-val="{{ false }}"><span title="Pendências nesta etapa" style="min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:#FEF3C7;color:#B45309;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ pend.rep.n }}</span></sc-if><sc-if value="{{ pend.rep.ok }}" hint-placeholder-val="{{ false }}"><span title="Etapa completa" style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:18px;color:#16A34A">check_circle</span></sc-if><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;color:#A9B2CC">{{ chev.rep }}</span>
+</button>
+<sc-if value="{{ isOpen.rep }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 22px 32px;display:flex;flex-direction:column;gap:14px">
+<sc-if value="{{ pend.rep.has }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;background:#FFFBEB"><sc-for list="{{ pend.rep.items }}" as="pi" hint-placeholder-count="1"><div onClick="{{ pi.onClick }}" title="Ir para o campo" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:#92400E;cursor:pointer;border-radius:6px;padding:2px 4px;margin:0 -4px" style-hover="background:#FEF3C7"><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:16px;color:#D97706;flex:none">error</span><span>{{ pi.t }}</span></div></sc-for></div></sc-if>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Nome</span><input data-pf="repNome" value="{{ f.repNome }}" onChange="{{ on.repNome }}" placeholder="{{ ex.repNome }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Cargo</span><input data-pf="repCargo" value="{{ f.repCargo }}" onChange="{{ on.repCargo }}" placeholder="{{ ex.repCargo }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">E-mail</span><input data-pf="repEmail" value="{{ f.repEmail }}" onChange="{{ on.repEmail }}" placeholder="{{ ex.repEmail }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Telefone</span><input data-pf="repTelefone" value="{{ f.repTelefone }}" onChange="{{ on.repTelefone }}" placeholder="{{ ex.repTelefone }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+</div>
+<div style="display:flex;align-items:center;gap:14px">
+<div style="width:56px;height:56px;border-radius:28px;background-color:#E1E3EE;background-image:{{ fotoCss }};background-position:center;background-size:cover;background-repeat:no-repeat;flex:none"></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:6px">
+<span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Foto</span>
+<div style="display:flex;gap:8px">
+<label tabindex="0" data-pf="repFoto" style="height:36px;padding:0 14px;white-space:nowrap;border-radius:8px;border:1px solid #DADEEC;background:#FFFFFF;display:flex;align-items:center;font-size:13px;font-weight:600;cursor:pointer;outline:none" style-hover="border-color:#2176FF" style-focus="border-color:#2176FF;box-shadow:0 0 0 3px #D6E4FF">Enviar foto<input type="file" accept="image/*" onChange="{{ onFoto }}" style="display:none"></label>
+<button onClick="{{ onFotoPadrao }}" style="height:36px;padding:0 12px;border-radius:8px;border:none;background:transparent;color:#6B7290;font:inherit;font-size:13px;cursor:pointer">Usar padrão</button>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+
+<sc-if value="{{ temApp }}" hint-placeholder-val="{{ true }}">
+<div onFocus="{{ focus.hip }}" style="flex:none;border-bottom:1px solid #E1E3EE">
+<button onClick="{{ toggle.hip }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:18px 0;border:none;background:transparent;color:#12172F;font:inherit;text-align:left;cursor:pointer">
+<span style="width:20px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums">03</span>
+<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700">Hipóteses de conversão</span><span style="font-size:12px;color:#6B7290">{{ slideLbl.hip }} · até 3 hipóteses</span></span>
+<sc-if value="{{ pend.hip.has }}" hint-placeholder-val="{{ false }}"><span title="Pendências nesta etapa" style="min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:#FEF3C7;color:#B45309;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ pend.hip.n }}</span></sc-if><sc-if value="{{ pend.hip.ok }}" hint-placeholder-val="{{ false }}"><span title="Etapa completa" style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:18px;color:#16A34A">check_circle</span></sc-if><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;color:#A9B2CC">{{ chev.hip }}</span>
+</button>
+<sc-if value="{{ isOpen.hip }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 22px 32px;display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{ pend.hip.has }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;background:#FFFBEB"><sc-for list="{{ pend.hip.items }}" as="pi" hint-placeholder-count="1"><div onClick="{{ pi.onClick }}" title="Ir para o campo" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:#92400E;cursor:pointer;border-radius:6px;padding:2px 4px;margin:0 -4px" style-hover="background:#FEF3C7"><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:16px;color:#D97706;flex:none">error</span><span>{{ pi.t }}</span></div></sc-for></div></sc-if>
+<sc-for list="{{ hipoteses }}" as="h" hint-placeholder-count="3">
+<div style="border:1px solid #E1E3EE;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;background:#FAFBFD">
+<div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2176FF">HIPÓTESE {{ h.n }}</span><button onClick="{{ h.onRemove }}" style="margin-left:auto;border:none;background:transparent;color:#6B7290;font:inherit;font-size:12px;cursor:pointer" style-hover="color:#D2535A">Remover</button></div>
+<input data-pf="hip-{{ h.n }}" value="{{ h.t }}" onChange="{{ h.onT }}" placeholder="{{ h.pt }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;font-weight:700;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+<input value="{{ h.d }}" onChange="{{ h.onD }}" placeholder="{{ h.pd }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+</div>
+</sc-for>
+<sc-if value="{{ podeAddHip }}" hint-placeholder-val="{{ false }}"><button onClick="{{ addHip }}" style="height:40px;border-radius:10px;border:1px dashed #A9B2CC;background:transparent;color:#2176FF;font:inherit;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#EEF3FF">+ Adicionar hipótese</button></sc-if>
+</div>
+</sc-if>
+</div>
+
+<div onFocus="{{ focus.rev }}" style="flex:none;border-bottom:1px solid #E1E3EE">
+<button onClick="{{ toggle.rev }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:18px 0;border:none;background:transparent;color:#12172F;font:inherit;text-align:left;cursor:pointer">
+<span style="width:20px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums">04</span>
+<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700">Reviews do prospect</span><span style="font-size:12px;color:#6B7290">{{ slideLbl.rev }}</span></span>
+<sc-if value="{{ pend.rev.has }}" hint-placeholder-val="{{ false }}"><span title="Pendências nesta etapa" style="min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:#FEF3C7;color:#B45309;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ pend.rev.n }}</span></sc-if><sc-if value="{{ pend.rev.ok }}" hint-placeholder-val="{{ false }}"><span title="Etapa completa" style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:18px;color:#16A34A">check_circle</span></sc-if><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;color:#A9B2CC">{{ chev.rev }}</span>
+</button>
+<sc-if value="{{ isOpen.rev }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 22px 32px;display:flex;flex-direction:column;gap:14px">
+<sc-if value="{{ pend.rev.has }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;background:#FFFBEB"><sc-for list="{{ pend.rev.items }}" as="pi" hint-placeholder-count="1"><div onClick="{{ pi.onClick }}" title="Ir para o campo" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:#92400E;cursor:pointer;border-radius:6px;padding:2px 4px;margin:0 -4px" style-hover="background:#FEF3C7"><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:16px;color:#D97706;flex:none">error</span><span>{{ pi.t }}</span></div></sc-for></div></sc-if>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Taxonomia (jornadas)</span><input data-pf="taxonomia" value="{{ f.taxonomia }}" onChange="{{ on.taxonomia }}" placeholder="{{ ex.taxonomia }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Mês da review</span><input data-pf="reviewMes" value="{{ f.reviewMes }}" onChange="{{ on.reviewMes }}" placeholder="{{ ex.reviewMes }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Categoria</span><input data-pf="reviewCategoria" value="{{ f.reviewCategoria }}" onChange="{{ on.reviewCategoria }}" placeholder="{{ ex.reviewCategoria }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+</div>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Review real (1 estrela)</span><textarea rows="3" data-pf="reviewTexto" value="{{ f.reviewTexto }}" onChange="{{ on.reviewTexto }}" placeholder="{{ ex.reviewTexto }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;line-height:1.45;color:#12172F;background:#FFFFFF;outline:none;resize:vertical" style-focus="border-color:#2176FF"></textarea></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Resposta exemplo RankMyApp</span><textarea rows="4" data-pf="reviewResposta" value="{{ f.reviewResposta }}" onChange="{{ on.reviewResposta }}" placeholder="{{ ex.reviewResposta }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;line-height:1.45;color:#12172F;background:#FFFFFF;outline:none;resize:vertical" style-focus="border-color:#2176FF"></textarea></label>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<div onFocus="{{ focus.passos }}" style="flex:none;border-bottom:1px solid #E1E3EE">
+<button onClick="{{ toggle.passos }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:18px 0;border:none;background:transparent;color:#12172F;font:inherit;text-align:left;cursor:pointer">
+<span style="width:20px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums">05</span>
+<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700">Próximos passos</span><span style="font-size:12px;color:#6B7290">{{ slideLbl.passos }}</span></span>
+<sc-if value="{{ pend.passos.has }}" hint-placeholder-val="{{ false }}"><span title="Pendências nesta etapa" style="min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:#FEF3C7;color:#B45309;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ pend.passos.n }}</span></sc-if><sc-if value="{{ pend.passos.ok }}" hint-placeholder-val="{{ false }}"><span title="Etapa completa" style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:18px;color:#16A34A">check_circle</span></sc-if><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;color:#A9B2CC">{{ chev.passos }}</span>
+</button>
+<sc-if value="{{ isOpen.passos }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 22px 32px;display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{ pend.passos.has }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;background:#FFFBEB"><sc-for list="{{ pend.passos.items }}" as="pi" hint-placeholder-count="1"><div onClick="{{ pi.onClick }}" title="Ir para o campo" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:#92400E;cursor:pointer;border-radius:6px;padding:2px 4px;margin:0 -4px" style-hover="background:#FEF3C7"><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:16px;color:#D97706;flex:none">error</span><span>{{ pi.t }}</span></div></sc-for></div></sc-if>
+<sc-for list="{{ passos }}" as="p" hint-placeholder-count="4">
+<div style="border:1px solid #E1E3EE;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;background:#FAFBFD">
+<span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2176FF">ETAPA {{ p.n }}</span>
+<div style="display:grid;grid-template-columns:1.3fr 1fr;gap:8px">
+<input data-pf="passo-{{ p.n }}" value="{{ p.titulo }}" onChange="{{ p.onTitulo }}" placeholder="{{ p.pTitulo }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;font-weight:700;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+<input value="{{ p.quando }}" onChange="{{ p.onQuando }}" placeholder="{{ p.pQuando }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+</div>
+<textarea rows="2" value="{{ p.texto }}" onChange="{{ p.onTexto }}" placeholder="{{ p.pTexto }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;line-height:1.45;color:#12172F;background:#FFFFFF;outline:none;resize:vertical" style-focus="border-color:#2176FF"></textarea>
+</div>
+</sc-for>
+<span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2176FF;margin-top:6px">NOSSO CONVITE</span>
+<input data-pf="conviteAntes" value="{{ f.conviteAntes }}" onChange="{{ on.conviteAntes }}" placeholder="{{ ex.conviteAntes }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+<input data-pf="conviteDestaque" value="{{ f.conviteDestaque }}" onChange="{{ on.conviteDestaque }}" placeholder="{{ ex.conviteDestaque }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;font-weight:700;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+<input data-pf="conviteDepois" value="{{ f.conviteDepois }}" onChange="{{ on.conviteDepois }}" placeholder="{{ ex.conviteDepois }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+</div>
+</sc-if>
+</div>
+
+<div onFocus="{{ focus.preco }}" style="flex:none;border-bottom:1px solid #E1E3EE">
+<button onClick="{{ toggle.preco }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:18px 0;border:none;background:transparent;color:#12172F;font:inherit;text-align:left;cursor:pointer">
+<span style="width:20px;font-size:12px;font-weight:600;color:#A9B2CC;font-variant-numeric:tabular-nums">06</span>
+<span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:700">Proposta comercial</span><span style="font-size:12px;color:#6B7290">{{ slideLbl.preco }} · frentes, descontos e condições</span></span>
+<sc-if value="{{ pend.preco.has }}" hint-placeholder-val="{{ false }}"><span title="Pendências nesta etapa" style="min-width:22px;height:22px;padding:0 7px;border-radius:11px;background:#FEF3C7;color:#B45309;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ pend.preco.n }}</span></sc-if><sc-if value="{{ pend.preco.ok }}" hint-placeholder-val="{{ false }}"><span title="Etapa completa" style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:18px;color:#16A34A">check_circle</span></sc-if><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;color:#A9B2CC">{{ chev.preco }}</span>
+</button>
+<sc-if value="{{ isOpen.preco }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 22px 32px;display:flex;flex-direction:column;gap:14px">
+<sc-if value="{{ pend.preco.has }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:6px;padding:10px 12px;border-radius:10px;background:#FFFBEB"><sc-for list="{{ pend.preco.items }}" as="pi" hint-placeholder-count="1"><div onClick="{{ pi.onClick }}" title="Ir para o campo" style="display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.4;color:#92400E;cursor:pointer;border-radius:6px;padding:2px 4px;margin:0 -4px" style-hover="background:#FEF3C7"><span style="font-family:'Material Symbols Rounded';line-height:1;font-weight:400;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:16px;color:#D97706;flex:none">error</span><span>{{ pi.t }}</span></div></sc-for></div></sc-if>
+
+<div style="background:#05142D;color:#F8FAFC;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:#06B6D4">MENSAL FINAL</span><span style="font-size:26px;font-weight:700">{{ r.mensalFmt }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#94A3B8">Valor de tabela</span><span>{{ r.mensalCheioFmt }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#94A3B8">Desconto total ({{ r.descontoPctFmt }})</span><span style="color:#06B6D4">{{ r.descontoTotalFmt }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:#94A3B8">Setup</span><span>{{ r.setupBoxFmt }}</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px;padding-top:8px;border-top:1px solid rgba(205,212,234,0.2)"><span style="color:#94A3B8">Total do contrato ({{ r.prazoFmt }})</span><span style="font-weight:700">{{ r.totalFmt }}</span></div>
+</div>
+
+<span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2176FF">FRENTES E ESCOPO</span>
+<sc-for list="{{ itens }}" as="it" hint-placeholder-count="4">
+<div style="border:1px solid #E1E3EE;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;background:#FAFBFD;opacity:{{ it.opacity }}">
+<div style="display:flex;align-items:center;gap:10px">
+<input type="checkbox" checked="{{ it.incluso }}" onChange="{{ it.onIncluso }}" title="Incluir na proposta" style="width:18px;height:18px;margin:0;accent-color:#2176FF;flex:none;cursor:pointer">
+<input value="{{ it.nome }}" onChange="{{ it.onNome }}" placeholder="Nome da frente" style="flex:1;min-width:0;padding:8px 10px;border:1px solid #DADEEC;border-radius:8px;font:inherit;font-size:14px;font-weight:700;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+<button onClick="{{ it.onRemove }}" title="Remover frente" style="border:none;background:transparent;color:#6B7290;font:inherit;font-size:12px;cursor:pointer" style-hover="color:#D2535A">Remover</button>
+</div>
+<textarea rows="2" value="{{ it.desc }}" onChange="{{ it.onDesc }}" placeholder="Descrição da frente" style="width:100%;padding:8px 10px;border:1px solid #DADEEC;border-radius:8px;font:inherit;font-size:13px;line-height:1.4;color:#12172F;background:#FFFFFF;outline:none;resize:vertical" style-focus="border-color:#2176FF"></textarea>
+<div style="display:grid;grid-template-columns:1fr 90px 1fr;gap:8px;align-items:end">
+<label style="display:flex;flex-direction:column;gap:4px"><span style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:#6B7290">PREÇO (R$/MÊS)</span><input type="number" min="0" step="100" data-pf="item-{{ it.n }}" value="{{ it.preco }}" onChange="{{ it.onPreco }}" placeholder="{{ it.pPreco }}" style="width:100%;padding:8px 10px;border:1px solid #DADEEC;border-radius:8px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:4px"><span style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:#6B7290">DESC. %</span><input type="number" min="0" max="100" step="1" value="{{ it.desconto }}" onChange="{{ it.onDesconto }}" style="width:100%;padding:8px 10px;border:1px solid #DADEEC;border-radius:8px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><span style="font-size:10px;font-weight:600;letter-spacing:0.08em;color:#6B7290">FINAL</span><span style="font-size:16px;font-weight:700;padding:8px 0">{{ it.finalFmt }}</span></div>
+</div>
+</div>
+</sc-for>
+<button onClick="{{ addItem }}" style="height:40px;border-radius:10px;border:1px dashed #A9B2CC;background:transparent;color:#2176FF;font:inherit;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#EEF3FF">+ Adicionar frente</button>
+
+<span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2176FF;margin-top:6px">DESCONTO COMERCIAL (SOBRE O MENSAL)</span>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<select data-pf="descTipo" value="{{ f.descTipo }}" onChange="{{ on.descTipo }}" placeholder="{{ ex.descTipo }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none"><option value="pct">Percentual (%)</option><option value="valor">Valor fixo (R$)</option></select>
+<input type="number" min="0" data-pf="descValor" value="{{ f.descValor }}" onChange="{{ on.descValor }}" placeholder="{{ ex.descValor }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+</div>
+
+<span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2176FF;margin-top:6px">SETUP</span>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center">
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Valor único (R$)</span><input type="number" min="0" step="100" data-pf="setupValor" value="{{ f.setupValor }}" onChange="{{ on.setupValor }}" placeholder="{{ ex.setupValor }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;align-items:center;gap:8px;padding-top:18px;font-size:14px;cursor:pointer"><input data-pf="setupIsento" type="checkbox" checked="{{ f.setupIsento }}" onChange="{{ on.setupIsento }}" style="width:18px;height:18px;margin:0;accent-color:#2176FF">Isentar setup</label>
+</div>
+<input data-pf="setupNome" value="{{ f.setupNome }}" onChange="{{ on.setupNome }}" placeholder="{{ ex.setupNome }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+<input data-pf="setupDesc" value="{{ f.setupDesc }}" onChange="{{ on.setupDesc }}" placeholder="{{ ex.setupDesc }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+
+<span style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#2176FF;margin-top:6px">CONDIÇÕES</span>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Prazo (meses)</span><input type="number" min="1" data-pf="prazo" value="{{ f.prazo }}" onChange="{{ on.prazo }}" placeholder="{{ ex.prazo }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Validade</span><input data-pf="validade" value="{{ f.validade }}" onChange="{{ on.validade }}" placeholder="{{ ex.validade }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+</div>
+<label style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6B7290">Observação sob o valor</span><input data-pf="apps" value="{{ f.apps }}" onChange="{{ on.apps }}" placeholder="{{ ex.apps }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF"></label>
+<label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input data-pf="mostrarTotal" type="checkbox" checked="{{ f.mostrarTotal }}" onChange="{{ on.mostrarTotal }}" style="width:18px;height:18px;margin:0;accent-color:#2176FF">Mostrar valor total do contrato no slide</label>
+
+<div style="border:1px solid #E1E3EE;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;background:#FAFBFD">
+<label style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;cursor:pointer"><input data-pf="promoAtiva" type="checkbox" checked="{{ f.promoAtiva }}" onChange="{{ on.promoAtiva }}" style="width:18px;height:18px;margin:0;accent-color:#2176FF">Condição especial em destaque</label>
+<input data-pf="promoTitulo" value="{{ f.promoTitulo }}" onChange="{{ on.promoTitulo }}" placeholder="{{ ex.promoTitulo }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+<input data-pf="promoTexto" value="{{ f.promoTexto }}" onChange="{{ on.promoTexto }}" placeholder="{{ ex.promoTexto }}" style="width:100%;padding:10px 12px;border:1px solid #DADEEC;border-radius:10px;font:inherit;font-size:14px;color:#12172F;background:#FFFFFF;outline:none" style-focus="border-color:#2176FF">
+</div>
+</div>
+</sc-if>
+</div>
+
+<button onClick="{{ onReset }}" style="align-self:flex-start;margin-top:4px;border:none;background:transparent;color:#6B7290;font:inherit;font-size:12px;cursor:pointer;text-decoration:underline">Limpar os campos desta proposta</button>
+</aside>
+
+<main style="min-width:0;min-height:0;padding:20px 28px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:8px;min-width:0">
+<button onClick="{{ onPrev }}" title="Slide anterior" aria-label="Slide anterior" style="flex:none;width:32px;height:32px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid #DADEEC;background:#FFFFFF;color:#12172F;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">chevron_left</span></button>
+<div style="flex:1;min-width:0;display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px">
+<sc-for list="{{ chips }}" as="c" hint-placeholder-count="15"><button onClick="{{ c.onClick }}" title="{{ c.label }}" style="flex:none;width:96px;height:58px;padding:7px 9px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;border-radius:8px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font:inherit;cursor:pointer"><span style="font-size:11px;font-weight:600;opacity:0.6;font-variant-numeric:tabular-nums">{{ c.num }}</span><span style="font-size:11px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%">{{ c.label }}</span></button></sc-for>
+</div>
+<button onClick="{{ onNext }}" title="Próximo slide" aria-label="Próximo slide" style="flex:none;width:32px;height:32px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid #DADEEC;background:#FFFFFF;color:#12172F;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">chevron_right</span></button>
+</div>
+<div style="flex:1;min-height:0;display:flex;align-items:flex-start;justify-content:center">
+<div style="width:100%;max-height:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#05142D;box-shadow:0 20px 50px rgba(18,23,47,0.18)">
+<iframe ref="{{ iframeRef }}" onLoad="{{ onLoad }}" src="RankMyApp Apresentacao Template.dc.html?embed=1" title="Pré-visualização da apresentação" style="width:100%;height:100%;border:0;display:block"></iframe>
+</div>
+</div>
+<p style="margin:0;font-size:12px;color:#6B7290">Em <strong style="color:#12172F">Apresentar</strong>, use as setas para navegar. <strong style="color:#12172F">Salvar PDF</strong> abre a janela de impressão: escolha "Salvar como PDF".</p>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const STAGE = { capa: 'contracapa', rep: 'assinatura', hip: 'conversao', rev: 'reviews', passos: 'passos', preco: 'preco' };
+const FIELDS = {
+  prospect: 'prospect', data: 'data', subtitulo: 'subtitulo', preparadoPara: 'preparadoPara', escopo: 'escopo',
+  repNome: 'rep.nome', repCargo: 'rep.cargo', repEmail: 'rep.email', repTelefone: 'rep.telefone', repFoto: 'rep.foto',
+  taxonomia: 'taxonomia', reviewMes: 'review.mes', reviewTexto: 'review.texto', reviewCategoria: 'review.categoria', reviewResposta: 'review.resposta',
+  conviteAntes: 'convite.antes', conviteDestaque: 'convite.destaque', conviteDepois: 'convite.depois',
+  setupNome: 'preco.setup.nome', setupDesc: 'preco.setup.desc', setupValor: 'preco.setup.valor', setupIsento: 'preco.setup.isento',
+  descTipo: 'preco.descontoGeral.tipo', descValor: 'preco.descontoGeral.valor', prazo: 'preco.prazo', validade: 'preco.validade', apps: 'preco.apps',
+  promoAtiva: 'preco.promo.ativa', promoTitulo: 'preco.promo.titulo', promoTexto: 'preco.promo.texto', mostrarTotal: 'preco.mostrarTotal'
+};
+const getP = (o, p) => p.split('.').reduce((x, k) => (x == null ? x : x[k]), o);
+const setP = (o, p, v) => { const k = p.split('.'); let x = o; for (let i = 0; i < k.length - 1; i++) x = x[k[i]]; x[k[k.length - 1]] = v; };
+const val = e => { const t = e.target; if (t.type === 'checkbox') return t.checked; if (t.type === 'number') { const n = parseFloat(t.value); return isNaN(n) ? '' : n; } return t.value; };
+
+class Component extends DCLogic {
+  state = { store: null, prodOpen: false, open: null, ajudaOpen: false, slide: 0, editNome: false, listaOpen: false, pendListaOpen: false };
+  nomeRef = React.createRef();
+  iframeRef = React.createRef();
+  componentDidMount() {
+    const init = () => this.setState({ store: RMA.loadStore() });
+    if (window.RMA) init(); else this._t = setInterval(() => { if (window.RMA) { clearInterval(this._t); init(); } }, 40);
+  }
+  componentWillUnmount() { clearInterval(this._t); }
+  cur(s) { s = s || this.state.store; return s.propostas[s.ativa].cfg; }
+  win() { const f = this.iframeRef.current; return f && f.contentWindow; }
+  push(store) { const w = this.win(); if (w) w.postMessage({ type: 'rma-cfg', cfg: this.cur(store) }, '*'); }
+  sl() { return RMA.slides(this.state.store ? this.cur() : null); }
+  idx(key) { const i = this.sl().findIndex(x => x.key === key); return i < 0 ? 0 : i; }
+  toggleProd(id, on) {
+    this.update(c => {
+      c.produtos = Object.assign({ rankmyapp: true }, c.produtos);
+      if (!on && Object.keys(c.produtos).filter(k => c.produtos[k]).length <= 1) { alert('Selecione ao menos um produto.'); return; }
+      c.produtos[id] = on;
+      if (!on && c.principal === id) c.principal = RMA.principal(c);
+      const it = c.preco.itens = c.preco.itens || [];
+      if (id === 'rankmyapp') it.forEach(x => { if (RMA.APP_ITENS.includes(x.id)) x.incluso = on; });
+      else {
+        const P = RMA.PRODUTOS.find(x => x.id === id), fid = 'p-' + id, ex = it.find(x => x.id === fid);
+        if (on) { c.modulos = Object.assign({}, c.modulos); if (!(c.modulos[id] || []).length) c.modulos[id] = P.modulos.filter(m => m.padrao).map(m => m.id); }
+        const dsc = P.modulos.length ? P.modulos.filter(m => (c.modulos[id] || []).includes(m.id)).map(m => m.nome).join(', ') : P.desc;
+        if (on && !ex) it.push({ id: fid, nome: P.nome, desc: dsc, preco: '', desconto: 0, incluso: true });
+        if (!on && ex) it.splice(it.indexOf(ex), 1);
+      }
+    });
+  }
+  toggleMod(pid, mid, on) {
+    this.update(c => {
+      c.modulos = Object.assign({}, c.modulos); const l = (c.modulos[pid] || []).filter(x => x !== mid); if (on) l.push(mid);
+      const P = RMA.PRODUTOS.find(x => x.id === pid); c.modulos[pid] = P.modulos.map(m => m.id).filter(x => l.includes(x));
+      const f = (c.preco.itens || []).find(x => x.id === 'p-' + pid);
+      if (f) f.desc = P.modulos.filter(m => c.modulos[pid].includes(m.id)).map(m => m.nome).join(', ');
+    });
+  }
+  goto(n) { if (this.state.slide !== n) this.setState({ slide: n }); const w = this.win(); if (w) w.postMessage({ type: 'rma-goto', n }, '*'); }
+  commit(store) { RMA.saveStore(store); this.setState({ store }); this.push(store); }
+  update(fn) { const store = RMA.clone(this.state.store); fn(this.cur(store)); store.propostas[store.ativa].atualizado = Date.now(); this.commit(store); }
+  bind(path) { return e => { const v = val(e); this.update(c => setP(c, path, v)); }; }
+  pendencias(c) {
+    const D = RMA.EXEMPLO, ex = (c.prospect || '').trim() !== D.prospect;
+    const t = s => (s || '').trim(), same = (a, b) => t(a) === t(b);
+    const P = { prod: [], capa: [], rep: [], hip: [], rev: [], passos: [], preco: [] };
+    const sel = c.produtos || { rankmyapp: true }, temApp = !!sel.rankmyapp;
+    RMA.PRODUTOS.forEach(x => { if (sel[x.id] && x.modulos.length && !((c.modulos || {})[x.id] || []).length) P.prod.push({ t: 'Selecionar os módulos de ' + x.nome, fld: 'prod-' + x.id }); });
+    const add = (k, x, fld) => P[k].push({ t: x, fld });
+    const mes = new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }).replace(' de ', ' ');
+    const mesCap = mes.charAt(0).toUpperCase() + mes.slice(1);
+    if (!t(c.prospect) || false) add('capa', 'Definir o nome do prospect', 'prospect');
+    if (!t(c.data)) add('capa', 'Preencher o mês da proposta', 'data'); else if (t(c.data).toLowerCase() !== mes.toLowerCase()) add('capa', 'Conferir o mês da proposta (hoje: ' + mesCap + ')', 'data');
+    if (!t(c.preparadoPara)) add('capa', 'Preencher "Preparado para"', 'preparadoPara');
+    if (!t(c.escopo)) add('capa', 'Preencher o escopo', 'escopo');
+    if (!t(c.subtitulo)) add('capa', 'Preencher o subtítulo da capa', 'subtitulo');
+    const r = c.rep || {};
+    if (!t(r.nome)) add('rep', 'Preencher o nome do representante', 'repNome');
+    if (!t(r.cargo)) add('rep', 'Preencher o cargo', 'repCargo');
+    if (!t(r.email)) add('rep', 'Preencher o e-mail', 'repEmail');
+    if (!t(r.telefone)) add('rep', 'Preencher o telefone', 'repTelefone');
+    if (r.foto === D.rep.foto) add('rep', 'Enviar a foto do representante', 'repFoto');
+    const hs = temApp ? (c.hipoteses || []) : [];
+    if (temApp && !hs.some(x => t(x.t))) add('hip', 'Preencher ao menos uma hipótese', 'hip-1');
+    hs.forEach((x, i) => {
+      if (!t(x.t)) { if (t(x.d)) add('hip', 'Hipótese ' + (i + 1) + ' sem título', 'hip-' + (i + 1)); }
+      else if (ex && D.hipoteses.some(d => same(d.t, x.t))) add('hip', 'Hipótese ' + (i + 1) + ' ainda é o exemplo da Rodobens', 'hip-' + (i + 1));
+      if (t(x.t) && !t(x.d)) add('hip', 'Hipótese ' + (i + 1) + ' sem descrição', 'hip-' + (i + 1));
+    });
+    const rv = c.review || {};
+    if (temApp) {
+    if (!t(rv.mes)) add('rev', 'Preencher o mês da review', 'reviewMes');
+    if (!t(rv.categoria)) add('rev', 'Preencher a categoria da review', 'reviewCategoria');
+    if (!t(c.taxonomia)) add('rev', 'Preencher a taxonomia', 'taxonomia');
+    else if (ex && same(c.taxonomia, D.taxonomia)) add('rev', 'Ajustar a taxonomia às jornadas do prospect', 'taxonomia');
+    if (!t(rv.texto)) add('rev', 'Incluir uma review real', 'reviewTexto');
+    else if (ex && same(rv.texto, D.review.texto)) add('rev', 'Trocar pela review real do app do prospect', 'reviewTexto');
+    if (!t(rv.resposta)) add('rev', 'Escrever a resposta exemplo', 'reviewResposta');
+    else if (ex && same(rv.resposta, D.review.resposta)) add('rev', 'Reescrever a resposta exemplo para essa review', 'reviewResposta');
+    if (ex && same(rv.categoria, D.review.categoria) && !same(rv.texto, D.review.texto)) add('rev', 'Conferir a categoria da review', 'reviewCategoria');
+    }
+    (c.passos || []).forEach((p, i) => {
+      if (!t(p.titulo) || !t(p.texto) || !t(p.quando)) add('passos', 'Completar a etapa ' + (i + 1), 'passo-' + (i + 1));
+      if (/a definir/i.test(p.quando || '')) add('passos', 'Definir a data da etapa ' + (i + 1), 'passo-' + (i + 1));
+      if (ex && D.passos[i] && same(p.texto, D.passos[i].texto) && /Gisele/.test(p.texto)) add('passos', 'Ajustar o contato citado na etapa ' + (i + 1), 'passo-' + (i + 1));
+    });
+    const cv = c.convite || {};
+    if (!t(cv.antes) || !t(cv.destaque) || !t(cv.depois)) add('passos', 'Completar a frase do convite', 'conviteAntes');
+    else if (ex && same(cv.destaque, D.convite.destaque)) add('passos', 'Personalizar o convite com a dor principal do prospect', 'conviteDestaque');
+    const p = c.preco || {}, inc = (p.itens || []).filter(x => x.incluso);
+    if (!inc.length) add('preco', 'Incluir ao menos uma frente');
+    (p.itens || []).forEach((x, i) => { if (!x.incluso) return; if (x.preco === '' || x.preco == null || +x.preco < 0) add('preco', 'Definir o preço de "' + (t(x.nome) || 'frente sem nome') + '"', 'item-' + (i + 1)); if (!t(x.nome)) add('preco', 'Frente incluída sem nome', 'item-' + (i + 1)); });
+    if (p.setup && (p.setup.valor === '' || p.setup.valor == null)) add('preco', 'Definir o valor do setup (0 se não houver)', 'setupValor');
+    if (!(+p.prazo > 0)) add('preco', 'Definir o prazo do contrato', 'prazo');
+    if (!t(p.validade)) add('preco', 'Definir a validade da proposta', 'validade');
+    if (p.promo && p.promo.ativa && (!t(p.promo.titulo) || !t(p.promo.texto))) add('preco', 'Completar a condição especial', 'promoTitulo');
+    const out = {};
+    const all = []; let num = 0;
+    for (const k in P) { P[k].forEach(it => { it.onClick = () => this.irPara(k, it.fld); it.num = ++num; all.push(it); }); out[k] = { items: P[k], n: P[k].length, has: P[k].length > 0, ok: P[k].length === 0 }; }
+    out.$all = all;
+    return out;
+  }
+  irPara(k, fld) {
+    if (k === 'prod') { this.setState({ prodOpen: true, pendListaOpen: false }); return; }
+    this.setState({ open: k, pendListaOpen: false });
+    this.goto(this.idx(STAGE[k]));
+    setTimeout(() => { const el = fld && document.querySelector('[data-pf="' + fld + '"]'); if (el) { el.focus({ preventScroll: false }); } }, 80);
+  }
+  onLoad = () => { [300, 900, 1800].forEach(ms => setTimeout(() => { this.push(); this.goto(this.state.slide); }, ms)); };
+
+  renderVals() {
+    const st = this.state.store;
+    if (!st || !window.RMA) return { slideLbl: {}, prodLista: [], temApp: true, pend: {}, f: {}, ex: {}, on: {}, isOpen: {}, chev: {}, toggle: {}, focus: {}, r: {}, hipoteses: [], passos: [], itens: [], chips: [], iframeRef: this.iframeRef, onLoad: this.onLoad };
+    const c = this.cur();
+    const f = {}, on = {};
+    const E = RMA.EXEMPLO, ex = {};
+    for (const k in FIELDS) { f[k] = getP(c, FIELDS[k]); on[k] = this.bind(FIELDS[k]); const v = getP(E, FIELDS[k]); ex[k] = typeof v === 'string' || typeof v === 'number' ? 'Ex.: ' + v : ''; }
+    const isOpen = {}, chev = {}, toggle = {}, focus = {};
+    const SL = RMA.slides(c), slideLbl = {}, nn = key => String(Math.max(0, SL.findIndex(x => x.key === key)) + 1).padStart(2, '0');
+    for (const k in STAGE) {
+      isOpen[k] = this.state.open === k; chev[k] = isOpen[k] ? 'expand_less' : 'expand_more';
+      toggle[k] = () => { this.setState({ open: this.state.open === k ? null : k }); this.goto(this.idx(STAGE[k])); };
+      focus[k] = () => this.goto(this.idx(STAGE[k]));
+      slideLbl[k] = 'Slide ' + nn(STAGE[k]);
+    }
+    slideLbl.capa = 'Slide ' + nn('contracapa'); slideLbl.rep = 'Slides ' + nn('contracapa') + ' e ' + nn('assinatura');
+    const sel = Object.assign({ rankmyapp: true }, c.produtos), mods = c.modulos || {}, main = RMA.principal(c);
+    const prodLista = RMA.PRODUTOS.map(P => {
+      const on = !!sel[P.id], ms = mods[P.id] || [];
+      return { isMain: on && P.id === main, podeMain: on && P.id !== main, onMain: () => this.update(x => { x.principal = P.id; }), nome: P.nome, desc: P.desc, checked: on, bg: on ? '#F7F9FD' : 'transparent', onToggle: e => this.toggleProd(P.id, e.target.checked),
+        temMods: on && P.modulos.length > 0, modsLabel: on && P.modulos.length ? ms.length + '/' + P.modulos.length : '',
+        mods: P.modulos.map(m => ({ nome: m.nome, tag: m.tag || '', temTag: !!m.tag, checked: ms.includes(m.id), onToggle: e => this.toggleMod(P.id, m.id, e.target.checked) })) };
+    });
+    const selNomes = RMA.PRODUTOS.filter(P => sel[P.id]).sort((a, b) => (b.id === main) - (a.id === main)).map(P => P.nome);
+    const hipoteses = (c.hipoteses || []).map((h, i) => ({
+      n: i + 1, t: h.t, d: h.d, pt: 'Ex.: ' + ((E.hipoteses[i] || E.hipoteses[0]).t), pd: 'Ex.: ' + ((E.hipoteses[i] || E.hipoteses[0]).d), onT: this.bind('hipoteses.' + i + '.t'), onD: this.bind('hipoteses.' + i + '.d'),
+      onRemove: () => this.update(x => x.hipoteses.splice(i, 1))
+    }));
+    const passos = (c.passos || []).map((p, i) => ({
+      n: i + 1, titulo: p.titulo, texto: p.texto, quando: p.quando, pTitulo: E.passos[i] ? 'Ex.: ' + E.passos[i].titulo : 'Título', pTexto: E.passos[i] ? 'Ex.: ' + E.passos[i].texto : 'Descrição', pQuando: E.passos[i] ? 'Ex.: ' + E.passos[i].quando : 'Quando',
+      onTitulo: this.bind('passos.' + i + '.titulo'), onTexto: this.bind('passos.' + i + '.texto'), onQuando: this.bind('passos.' + i + '.quando')
+    }));
+    const itens = (c.preco.itens || []).map((it, i) => {
+      const pr = +it.preco || 0, d = Math.min(100, Math.max(0, +it.desconto || 0));
+      return {
+        n: i + 1, nome: it.nome, desc: it.desc, preco: it.preco, pPreco: (() => { const m = E.preco.itens.find(x => x.id === it.id); return m ? 'Tabela: ' + m.preco : '0'; })(), desconto: it.desconto, incluso: !!it.incluso, opacity: it.incluso ? 1 : 0.5,
+        finalFmt: RMA.brl(pr * (1 - d / 100)),
+        onNome: this.bind('preco.itens.' + i + '.nome'), onDesc: this.bind('preco.itens.' + i + '.desc'),
+        onPreco: this.bind('preco.itens.' + i + '.preco'), onDesconto: this.bind('preco.itens.' + i + '.desconto'),
+        onIncluso: this.bind('preco.itens.' + i + '.incluso'),
+        onRemove: () => this.update(x => x.preco.itens.splice(i, 1))
+      };
+    });
+    const chips = SL.map(({ label }, n) => {
+      const a = this.state.slide === n;
+      return { label, num: String(n + 1).padStart(2, '0'), onClick: () => this.goto(n), bg: a ? '#05142D' : '#FFFFFF', color: a ? '#F8FAFC' : '#12172F', border: a ? '#05142D' : '#DADEEC' };
+    });
+    const onPrev = () => this.goto(Math.max(0, this.state.slide - 1));
+    const onNext = () => this.goto(Math.min(SL.length - 1, this.state.slide + 1));
+    const pend = this.pendencias(c), pendAll = pend.$all, pendTotal = pendAll.length;
+    const regAt = st.propostas[st.ativa], nomeDe = r => (r.nome || '').trim() || (r.cfg.prospect || '').trim() || 'Sem nome';
+    const fmtData = ts => ts ? new Date(ts).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' }).replace('.', '') : '';
+    const lista = Object.values(st.propostas).sort((a, b) => (b.atualizado || b.criado || 0) - (a.atualizado || a.criado || 0)).map(r => {
+      const n = this.pendencias(r.cfg).$all.length;
+      return { nome: nomeDe(r), sub: ((r.cfg.prospect || '').trim() || 'Prospect não definido') + ' · ' + fmtData(r.atualizado || r.criado), status: n ? n + (n === 1 ? ' pendência' : ' pendências') : 'Pronta', stColor: n ? '#B45309' : '#16A34A', bg: r.id === st.ativa ? '#EEF3FF' : 'transparent', onClick: () => { const s2 = RMA.clone(this.state.store); s2.ativa = r.id; this.commit(s2); this.setState({ listaOpen: false, editNome: false }); } };
+    });
+    return {
+      ajudaOpen: this.state.ajudaOpen, ajudaChev: this.state.ajudaOpen ? 'expand_less' : 'expand_more', onAjuda: () => this.setState({ ajudaOpen: !this.state.ajudaOpen }),
+      pend, pendAll, pendHas: pendTotal > 0, pendOk: pendTotal === 0,
+      pendListaOpen: this.state.pendListaOpen && pendTotal > 0, pendChev: this.state.pendListaOpen ? 'expand_less' : 'expand_more', pendListaLabel: this.state.pendListaOpen ? 'Fechar' : 'Ver todas',
+      onPendLista: () => this.setState({ pendListaOpen: !this.state.pendListaOpen }),
+      lista, nPropostas: lista.length, listaOpen: this.state.listaOpen, listaBg: this.state.listaOpen ? '#F1F3F8' : 'transparent',
+      onLista: () => this.setState({ listaOpen: !this.state.listaOpen }), onListaFechar: () => this.setState({ listaOpen: false }),
+      editNome: this.state.editNome, naoEditNome: !this.state.editNome, nomeRef: this.nomeRef,
+      nomeAtual: regAt.nome != null ? regAt.nome : nomeDe(regAt), nomeLabel: nomeDe(regAt),
+      onNomeEdit: () => { this.setState({ editNome: true }); setTimeout(() => { const el = this.nomeRef.current; if (el) { el.focus(); el.select(); } }, 30); },
+      onNome: e => { const s2 = RMA.clone(this.state.store); s2.propostas[s2.ativa].nome = e.target.value; s2.propostas[s2.ativa].atualizado = Date.now(); this.commit(s2); },
+      onNomeFim: () => this.setState({ editNome: false }),
+      onNomeKey: e => { if (e.key === 'Enter' || e.key === 'Escape') e.target.blur(); },
+      pendTotalLabel: pendTotal + (pendTotal === 1 ? ' pendência antes de enviar' : ' pendências antes de enviar'),
+      f, ex, on, isOpen, chev, toggle, focus, hipoteses, passos, itens, chips, onPrev, onNext,
+      fotoCss: 'url("' + (c.rep.foto || 'assets/img119.png') + '")',
+      r: RMA.compute(c), ativa: st.ativa, iframeRef: this.iframeRef, onLoad: this.onLoad,
+      podeAddHip: hipoteses.length < 3,
+      addHip: () => this.update(x => x.hipoteses.push({ t: '', d: '' })),
+      addItem: () => this.update(x => x.preco.itens.push({ id: RMA.uid(), nome: 'Nova frente', desc: '', preco: 0, desconto: 0, incluso: true })),
+      onFoto: e => {
+        const file = e.target.files && e.target.files[0]; if (!file) return;
+        const img = new Image(), rd = new FileReader();
+        rd.onload = () => { img.onload = () => {
+          const s = 360, cv = document.createElement('canvas'); cv.width = cv.height = s;
+          const m = Math.min(img.width, img.height), ctx = cv.getContext('2d');
+          ctx.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, s, s);
+          const url = cv.toDataURL('image/jpeg', 0.85); this.update(x => { x.rep.foto = url; });
+        }; img.src = rd.result; };
+        rd.readAsDataURL(file);
+      },
+      onFotoPadrao: () => this.update(x => { x.rep.foto = 'assets/img119.png'; }),
+      
+      onNova: () => { const store = RMA.clone(st), id = RMA.uid(), cfg = RMA.clone(RMA.DEFAULTS); store.propostas[id] = { id, nome: 'Nova apresentação', criado: Date.now(), cfg }; store.ativa = id; this.commit(store); this.setState({ open: null, slide: 0 }); this.goto(0); },
+      onDuplicar: () => { const store = RMA.clone(st), id = RMA.uid(), cfg = RMA.clone(c); store.propostas[id] = { id, nome: nomeDe(regAt) + ' (cópia)', criado: Date.now(), cfg }; store.ativa = id; this.commit(store); },
+      onExcluir: () => {
+        if (!confirm('Excluir a apresentação "' + nomeDe(regAt) + '"?')) return;
+        const store = RMA.clone(st); delete store.propostas[store.ativa];
+        const ids = Object.keys(store.propostas);
+        if (!ids.length) { const id = RMA.uid(); store.propostas[id] = { id, criado: Date.now(), cfg: RMA.clone(RMA.DEFAULTS) }; ids.push(id); }
+        store.ativa = ids[0]; this.commit(store);
+      },
+      onReset: () => { if (!confirm('Limpar todos os campos desta proposta?')) return; this.update(x => { Object.assign(x, RMA.clone(RMA.DEFAULTS)); }); },
+      slideLbl, prodLista, temApp: !!sel.rankmyapp, prodOpen: this.state.prodOpen, prodBg: this.state.prodOpen ? '#F1F3F8' : 'transparent',
+      prodLabel: selNomes[0] + (selNomes.length > 1 ? ' + ' + (selNomes.length - 1) : ''),
+      onProdLista: () => this.setState({ prodOpen: !this.state.prodOpen }), onProdFechar: () => this.setState({ prodOpen: false }),
+      onPdf: () => window.open('RankMyApp Apresentacao Template.dc.html?print=1', '_blank'),
+      onApresentar: () => window.open('RankMyApp Apresentacao Template.dc.html#1', '_blank')
+    };
+  }
+}
+</script>
+</body>
+</html>
